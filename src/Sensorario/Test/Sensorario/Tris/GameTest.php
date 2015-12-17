@@ -3,8 +3,7 @@
 namespace Sensorario\Test;
 
 use PHPUnit_Framework_TestCase;
-use Sensorario\Tris\Game;
-use Sensorario\Tris\Moderator;
+use Sensorario\Tris;
 
 class GameTest extends PHPUnit_Framework_TestCase
 {
@@ -19,23 +18,34 @@ class GameTest extends PHPUnit_Framework_TestCase
         $this->moderator->expects($this->once())
             ->method('greet');
 
-        new Game(
+        new Tris\Game(
             $this->moderator
         );
     }
 
+    /** @todo improve test name */
     public function testModeratorCreateTheBoard()
     {
-        $this->board = $this->getMockBuilder('Sensorario\Tris\Board')
-            ->getMock();
+        $firstPlayer = Tris\Player::box();
+
+        $players = [
+            'first_player' => $firstPlayer,
+            'second_player' => Tris\Player::box(),
+        ];
+
+        $this->board = Tris\Board::box($players);
 
         $this->moderator->expects($this->once())
             ->method('createBoard')
             ->will($this->returnValue($this->board));
 
-        new Game(
+        $this->game = new Tris\Game(
             $this->moderator
+        );
+
+        $this->assertEquals(
+            $firstPlayer,
+            $this->game->firstPlayer()
         );
     }
 }
-

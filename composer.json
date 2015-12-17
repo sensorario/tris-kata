@@ -26,5 +26,8 @@
         "branch-alias": {
             "dev-master": "1.1-dev"
         }
+    },
+    "require": {
+        "sensorario/value-object": "^2.1"
     }
 }
