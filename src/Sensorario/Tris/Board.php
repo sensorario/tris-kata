@@ -4,7 +4,9 @@ namespace Sensorario\Tris;
 
 use Sensorario\ValueObject\ValueObject;
 
-/** @todo should change status and know tiles value */
+/** @todo should change status */
+/** @todo accept a move */
+/** @todo know tiles value */
 final class Board extends ValueObject
 {
     const EMPTY_TILES = 9;
