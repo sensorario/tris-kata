@@ -20,5 +20,22 @@ class GameTest extends PHPUnit_Framework_TestCase
             $this->moderator
         );
     }
+
+    public function testModeratorCreateTheBoard()
+    {
+        $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
+            ->getMock();
+
+        $this->board = $this->getMockBuilder('Sensorario\Tris\Board')
+            ->getMock();
+
+        $this->moderator->expects($this->once())
+            ->method('createBoard')
+            ->will($this->returnValue($this->board));
+
+        new Game(
+            $this->moderator
+        );
+    }
 }
 

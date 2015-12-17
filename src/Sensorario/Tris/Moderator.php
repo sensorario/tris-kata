@@ -8,4 +8,9 @@ class Moderator
     {
 
     }
+
+    public function createBoard()
+    {
+        return new Board();
+    }
 }

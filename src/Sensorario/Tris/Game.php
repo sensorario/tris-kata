@@ -8,5 +8,6 @@ final class Game
             Moderator $moderator
         ) {
             $moderator->greet();
+            $moderator->createBoard();
         }
 }
