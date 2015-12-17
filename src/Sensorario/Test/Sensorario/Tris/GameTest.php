@@ -8,11 +8,14 @@ use Sensorario\Tris\Moderator;
 
 class GameTest extends PHPUnit_Framework_TestCase
 {
-    public function testGameStartsWithModeratorGreetings()
+    public function setUp()
     {
         $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
             ->getMock();
+    }
 
+    public function testGameStartsWithModeratorGreetings()
+    {
         $this->moderator->expects($this->once())
             ->method('greet');
 
@@ -23,9 +26,6 @@ class GameTest extends PHPUnit_Framework_TestCase
 
     public function testModeratorCreateTheBoard()
     {
-        $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
-            ->getMock();
-
         $this->board = $this->getMockBuilder('Sensorario\Tris\Board')
             ->getMock();
 
