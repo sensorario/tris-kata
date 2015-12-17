@@ -23,8 +23,7 @@ class GameTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    /** @todo improve test name */
-    public function testModeratorCreateTheBoard()
+    public function testGameKnowsPlayerViaBoard()
     {
         $firstPlayer = Tris\Player::box();
 
