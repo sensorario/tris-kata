@@ -8,8 +8,15 @@ use Sensorario\ValueObject\ValueObject;
 /** @todo accept a move */
 /** @todo know tiles value */
 final class Board extends ValueObject
+    implements Behavior\Board
 {
-    const EMPTY_TILES = 9;
+    const EMPTY_TILE = false;
+
+    private $moves = [[
+        [false, false, false],
+        [false, false, false],
+        [false, false, false],
+    ]];
 
     public function withPlayers(array $players = [])
     {
@@ -34,5 +41,46 @@ final class Board extends ValueObject
                 'object' => 'Sensorario\Tris\Player',
             ],
         ];
+    }
+
+    public function getInitialStatus()
+    {
+        for ($emptyLines = [], $i = 0; $i <= 2; $i++) {
+            for ($j = 0; $j <= 2; $j++) {
+                $emptyLines[$i][$j] = self::EMPTY_TILE;
+            }
+        }
+
+        return $emptyLines;
+    }
+
+    public function move(array $tiles)
+    {
+        $this->moves[] = $tiles;
+        return end($this->moves);
+    }
+
+    public function getMove($position)
+    {
+        if ($position === 0) {
+            return $this->getInitialStatus();
+        }
+
+        return $this->moves[$position];
+    }
+
+    public function getFreeTiles()
+    {
+        $final = $this->getInitialStatus();
+        foreach ($this->moves as $play) {
+            for ($i = 0; $i <= 2; $i++) {
+                for ($j = 0; $j <= 2; $j++) {
+                    if ($play[$i][$j]) {
+                        $final[$i][$j] = $play[$i][$j];
+                    }
+                }
+            }
+        }
+        return $final;
     }
 }
