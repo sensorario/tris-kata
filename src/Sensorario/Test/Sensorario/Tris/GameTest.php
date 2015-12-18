@@ -25,11 +25,15 @@ class GameTest extends PHPUnit_Framework_TestCase
 
     public function testGameKnowsPlayerViaBoard()
     {
-        $firstPlayer = Tris\Player::box();
+        $firstPlayer = Tris\Player::box([
+            'name' => 'Sensorario',
+        ]);
 
         $players = [
             'first_player' => $firstPlayer,
-            'second_player' => Tris\Player::box(),
+            'second_player' => Tris\Player::box([
+                'name' => 'Demo',
+            ]),
         ];
 
         $this->board = Tris\Board::box($players);

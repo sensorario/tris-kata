@@ -10,8 +10,12 @@ class BoardTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->board = Tris\Board::withPlayers([
-            'first_player' => Tris\Player::box(),
-            'second_player' => Tris\Player::box(),
+            'first_player' => Tris\Player::box([
+                'name' => 'Sensorario',
+            ]),
+            'second_player' => Tris\Player::box([
+                'name' => 'Demo',
+            ]),
         ]);
     }
 
