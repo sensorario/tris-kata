@@ -43,17 +43,6 @@ final class Board extends ValueObject
         ];
     }
 
-    public function getInitialStatus()
-    {
-        for ($emptyLines = [], $i = 0; $i <= 2; $i++) {
-            for ($j = 0; $j <= 2; $j++) {
-                $emptyLines[$i][$j] = self::EMPTY_TILE;
-            }
-        }
-
-        return $emptyLines;
-    }
-
     public function move(array $tiles)
     {
         $this->moves[] = $tiles;
@@ -62,16 +51,12 @@ final class Board extends ValueObject
 
     public function getMove($position)
     {
-        if ($position === 0) {
-            return $this->getInitialStatus();
-        }
-
         return $this->moves[$position];
     }
 
     public function getFreeTiles()
     {
-        $final = $this->getInitialStatus();
+        $final = $this->getMove(0);
         foreach ($this->moves as $play) {
             for ($i = 0; $i <= 2; $i++) {
                 for ($j = 0; $j <= 2; $j++) {

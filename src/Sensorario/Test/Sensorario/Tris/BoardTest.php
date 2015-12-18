@@ -25,7 +25,7 @@ class BoardTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $initialStatus,
-            $this->board->getInitialStatus()
+            $this->board->getMove(0)
         );
     }
 
