@@ -9,8 +9,8 @@ class Moderator
 
     }
 
-    public function createBoard()
+    public function createBoardWithPlayers(array $players)
     {
-        return new Board();
+        return Board::withPlayers($players);
     }
 }

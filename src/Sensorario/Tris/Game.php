@@ -12,7 +12,10 @@ final class Game
     ) {
         $moderator->greet();
 
-        $this->board = $moderator->createBoard();
+        $this->board = $moderator->createBoardWithPlayers([
+            Player::box(['name' => 'Sensorario']),
+            Player::box(['name' => 'Demo']),
+        ]);
     }
 
     public function firstPlayer()

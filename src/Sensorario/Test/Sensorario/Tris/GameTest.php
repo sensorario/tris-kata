@@ -23,7 +23,7 @@ class GameTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGameKnowsPlayerViaBoard()
+    public function testGameKnowsPlayerViaModerator()
     {
         $firstPlayer = Tris\Player::box([
             'name' => 'Sensorario',
@@ -39,7 +39,7 @@ class GameTest extends PHPUnit_Framework_TestCase
         $this->board = Tris\Board::box($players);
 
         $this->moderator->expects($this->once())
-            ->method('createBoard')
+            ->method('createBoardWithPlayers')
             ->will($this->returnValue($this->board));
 
         $this->game = new Tris\Game(
