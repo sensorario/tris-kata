@@ -16,6 +16,10 @@ final class Game
             Player::box(['name' => 'Sensorario']),
             Player::box(['name' => 'Demo']),
         ]);
+
+        $moderator->askMove(
+            $this->firstPlayer()
+        );
     }
 
     public function firstPlayer()

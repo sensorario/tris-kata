@@ -11,6 +11,23 @@ class GameTest extends PHPUnit_Framework_TestCase
     {
         $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
             ->getMock();
+
+        $this->firstPlayer = Tris\Player::box([
+            'name' => 'Sensorario',
+        ]);
+
+        $this->players = [
+            'first_player' => $this->firstPlayer,
+            'second_player' => Tris\Player::box([
+                'name' => 'Demo',
+            ]),
+        ];
+
+        $this->board = Tris\Board::box($this->players);
+
+        $this->moderator->expects($this->once())
+            ->method('createBoardWithPlayers')
+            ->will($this->returnValue($this->board));
     }
 
     public function testGameStartsWithModeratorGreetings()
@@ -25,29 +42,28 @@ class GameTest extends PHPUnit_Framework_TestCase
 
     public function testGameKnowsPlayerViaModerator()
     {
-        $firstPlayer = Tris\Player::box([
-            'name' => 'Sensorario',
-        ]);
+        $this->game = new Tris\Game(
+            $this->moderator
+        );
 
-        $players = [
-            'first_player' => $firstPlayer,
-            'second_player' => Tris\Player::box([
-                'name' => 'Demo',
-            ]),
-        ];
+        $this->assertEquals(
+            $this->firstPlayer,
+            $this->game->firstPlayer()
+        );
+    }
 
-        $this->board = Tris\Board::box($players);
-
+    public function testModeratorStartToAskMovesFromFirstPlayer()
+    {
         $this->moderator->expects($this->once())
-            ->method('createBoardWithPlayers')
-            ->will($this->returnValue($this->board));
+            ->method('askMove')
+            ->with($this->firstPlayer);
 
         $this->game = new Tris\Game(
             $this->moderator
         );
 
         $this->assertEquals(
-            $firstPlayer,
+            $this->firstPlayer,
             $this->game->firstPlayer()
         );
     }
