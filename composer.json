@@ -28,6 +28,6 @@
         }
     },
     "require": {
-        "sensorario/value-object": "^2.1"
+        "sensorario/value-object": "dev-master"
     }
 }
