@@ -6,5 +6,5 @@ use Sensorario\Tris;
 
 interface Moderator
 {
-    public function askMove(Tris\Player $player);
+
 }

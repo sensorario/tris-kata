@@ -7,7 +7,7 @@ use Sensorario\Tris;
 
 class GameTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    public function test()
     {
         $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
             ->getMock();
@@ -28,43 +28,9 @@ class GameTest extends PHPUnit_Framework_TestCase
         $this->moderator->expects($this->once())
             ->method('createBoardWithPlayers')
             ->will($this->returnValue($this->board));
-    }
 
-    public function testGameStartsWithModeratorGreetings()
-    {
-        $this->moderator->expects($this->once())
-            ->method('greet');
-
-        new Tris\Game(
+        $game = new Tris\Game(
             $this->moderator
-        );
-    }
-
-    public function testGameKnowsPlayerViaModerator()
-    {
-        $this->game = new Tris\Game(
-            $this->moderator
-        );
-
-        $this->assertEquals(
-            $this->firstPlayer,
-            $this->game->firstPlayer()
-        );
-    }
-
-    public function testModeratorStartToAskMovesFromFirstPlayer()
-    {
-        $this->moderator->expects($this->once())
-            ->method('askMove')
-            ->with($this->firstPlayer);
-
-        $this->game = new Tris\Game(
-            $this->moderator
-        );
-
-        $this->assertEquals(
-            $this->firstPlayer,
-            $this->game->firstPlayer()
         );
     }
 }
