@@ -44,7 +44,7 @@ final class Board extends ValueObject
                 for ($col = 0; $col <= 2; $col++) {
                     if ($move == $new) {
                         throw new \RuntimeException(
-                            'Already moved'
+                            'Already moved here'
                         );
                     }
                 }
