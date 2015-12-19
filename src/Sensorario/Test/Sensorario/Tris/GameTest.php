@@ -7,7 +7,7 @@ use Sensorario\Tris;
 
 class GameTest extends PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function setUp()
     {
         $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
             ->getMock();
@@ -24,7 +24,10 @@ class GameTest extends PHPUnit_Framework_TestCase
         ];
 
         $this->board = Tris\Board::box($this->players);
+    }
 
+    public function testModeratorCreateTheBoard()
+    {
         $this->moderator->expects($this->once())
             ->method('createBoardWithPlayers')
             ->will($this->returnValue($this->board));
