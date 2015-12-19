@@ -81,7 +81,7 @@ class BoardTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $freeTiles,
-            $this->board->getFreeTiles()
+            $this->board->getMatrixOfTiles()
         );
     }
 
@@ -120,6 +120,65 @@ class BoardTest extends PHPUnit_Framework_TestCase
             'row' => 1,
             'col' => 1,
         ]));
+    }
+
+    public function testTrisIsNotDoneWithoutMoves()
+    {
+        $this->assertFalse(
+            $this->board->trisIsDone()
+        );
+    }
+
+    public function testTrisPerRow()
+    {
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 2]));
+
+        $this->assertTrue(
+            $this->board->trisIsDone()
+        );
+    }
+
+    public function testTrisPerColumn()
+    {
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 2, 'col' => 0]));
+
+        $this->assertTrue(
+            $this->board->trisIsDone()
+        );
+    }
+
+    public function testDiagonal()
+    {
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 2, 'col' => 2]));
+
+        $this->assertTrue(
+            $this->board->trisIsDone()
+        );
+    }
+
+    public function testInverseDiagonal()
+    {
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 2]));
+        $this->board->move(Tris\Move::box(['row' => 0, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 1]));
+        $this->board->move(Tris\Move::box(['row' => 1, 'col' => 0]));
+        $this->board->move(Tris\Move::box(['row' => 2, 'col' => 0]));
+
+        $this->assertTrue(
+            $this->board->trisIsDone()
+        );
     }
 
     public function testSimulation()

@@ -60,7 +60,7 @@ final class Board extends ValueObject
         return $this->moves[$position];
     }
 
-    public function getFreeTiles()
+    public function getMatrixOfTiles()
     {
         $final = [
             [false, false, false],
@@ -114,5 +114,35 @@ final class Board extends ValueObject
     public function gameIsEnd()
     {
         return 0 === $this->countFreeTiles();
+    }
+
+    public function trisIsDone()
+    {
+        $tiles = $this->getMatrixOfTiles();
+
+        if (3 === $tiles[0][0] + $tiles[1][1] + $tiles[2][2]) {
+            return true;
+        }
+
+        if (3 === $tiles[0][2] + $tiles[1][1] + $tiles[0][2]) {
+            return true;
+        }
+
+        for ($i = 0; $i < 2; $i++) {
+            if (3 === array_sum($tiles[$i])) {
+                return true;
+            }
+
+            for ($sum = 0, $row = 0; $row <= 2; $row++) {
+                $sum += $tiles[$row][$i];
+                if (3 === $sum) {
+                    return true;
+                }
+            }
+        }
+
+        // check diagonal
+
+        return false;
     }
 }
