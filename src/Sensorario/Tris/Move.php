@@ -9,11 +9,17 @@ final class Move extends ValueObject
 {
     public function createRandom()
     {
-        return [
-            [false, false, false],
-            [false, false, false],
-            [false, true,  false],
-        ];
+        $row = rand(0,2);
+        $col = rand(0,2);
+        $move = [];
+
+        for ($i = 0; $i < 3; $i++) {
+            for ($j = 0; $j < 3; $j++) {
+                $move[$i][$j] = $j == $row && $i == $col;
+            }
+        }
+
+        return $move;
     }
 
     public static function mandatory()
