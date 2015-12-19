@@ -194,7 +194,7 @@ class BoardTest extends PHPUnit_Framework_TestCase
         } while ($this->board->countFreeTiles() !== 0);
 
         $this->assertTrue(
-            $this->board->gameIsEnd()
+            $this->board->boardIsFull()
         );
     }
 }

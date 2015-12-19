@@ -21,10 +21,17 @@ $currentMove = function ($move) use ($board) {
     echo " moved in ";
     echo " col " . $lastMove->get('col');
     echo " row " . $lastMove->get('row');
+
+    if ($board->trisIsDone()) {
+        echo $board->lastPlayer()->get('name');
+        die;
+    }
 };
 
-$currentMove(Tris\Move::box(['row' => 0, 'col' => 1]));
-$currentMove(Tris\Move::box(['row' => 1, 'col' => 2]));
-$currentMove(Tris\Move::box(['row' => 0, 'col' => 2]));
-$currentMove(Tris\Move::box(['row' => 2, 'col' => 2]));
-$currentMove(Tris\Move::box(['row' => 0, 'col' => 3]));
+
+do {
+    try {
+        $currentMove(Tris\Move::createRandom());
+    } catch (Exception $e) {
+    }
+} while ($board->matchIsNotFinished());

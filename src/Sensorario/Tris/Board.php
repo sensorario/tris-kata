@@ -92,6 +92,16 @@ final class Board extends ValueObject
         );
     }
 
+    /** @todo test this method */
+    public function lastPlayer()
+    {
+        return $this->get(
+            count($this->moves) % 2 == 1
+            ? 'first_player'
+            : 'second_player'
+        );
+    }
+
     public function countFreeTiles()
     {
         $numberOfFreeTiles = 9;
@@ -111,7 +121,7 @@ final class Board extends ValueObject
         return $numberOfFreeTiles;
     }
 
-    public function gameIsEnd()
+    public function boardIsFull()
     {
         return 0 === $this->countFreeTiles();
     }
@@ -144,5 +154,11 @@ final class Board extends ValueObject
         // check diagonal
 
         return false;
+    }
+
+    /** @todo test */
+    public function matchIsNotFinished()
+    {
+        return !$this->trisIsDone();
     }
 }

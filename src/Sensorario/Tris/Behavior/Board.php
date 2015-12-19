@@ -16,7 +16,9 @@ interface Board
 
     public function countFreeTiles();
 
-    public function gameIsEnd();
+    public function boardIsFull();
 
     public function trisIsDone();
+
+    public function lastPlayer();
 }
