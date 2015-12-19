@@ -10,6 +10,7 @@ class GameTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->moderator = $this->getMockBuilder('Sensorario\Tris\Moderator')
+            ->disableOriginalConstructor()
             ->getMock();
 
         $this->firstPlayer = Tris\Player::box([
@@ -28,9 +29,6 @@ class GameTest extends PHPUnit_Framework_TestCase
 
     public function testModeratorCreateTheBoardAndAskTeMove()
     {
-        $this->moderator->expects($this->once())
-            ->method('createBoardWithPlayers');
-
         $this->moderator->expects($this->exactly(9))
             ->method('doMove');
 
