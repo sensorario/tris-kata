@@ -23,20 +23,6 @@ class BoardTest extends PHPUnit_Framework_TestCase
         ]);
     }
 
-    // public function testStatusShouldContainAnArray()
-    // {
-    //     $initialStatus = [
-    //         [false, false, false],
-    //         [false, false, false],
-    //         [false, false, false],
-    //     ];
-
-    //     $this->assertEquals(
-    //         $initialStatus,
-    //         $this->board->getMove(0)
-    //     );
-    // }
-
     public function testAfterAMoveStatusChange()
     {
         $move = Tris\Move::box([
@@ -54,19 +40,6 @@ class BoardTest extends PHPUnit_Framework_TestCase
             )
         );
     }
-
-    // public function testContainsCollectionOfAllPlayedMoves()
-    // {
-    //     $move = Tris\Move::box([
-    //         'col' => 1,
-    //         'row' => 1,
-    //     ]);
-
-    //     $this->assertEquals(
-    //         $move,
-    //         $this->board->getMove(0)
-    //     );
-    // }
 
     public function testMovesCollectionAfterFirstMove()
     {

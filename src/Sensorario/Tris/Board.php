@@ -5,9 +5,6 @@ namespace Sensorario\Tris;
 use Sensorario\ValueObject\Helpers\JsonExporter;
 use Sensorario\ValueObject\ValueObject;
 
-/** @todo should change status */
-/** @todo accept a move */
-/** @todo know tiles value */
 final class Board extends ValueObject
     implements Behavior\Board
 {
