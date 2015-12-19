@@ -40,9 +40,21 @@ final class Board extends ValueObject
         ];
     }
 
-    public function move(Move $move)
+    public function move(Move $new)
     {
-        $this->moves[] = $move;
+        foreach ($this->moves as $move) {
+            for ($row = 0; $row <= 2; $row++) {
+                for ($col = 0; $col <= 2; $col++) {
+                    if ($move == $new) {
+                        throw new \RuntimeException(
+                            'Already moved'
+                        );
+                    }
+                }
+            }
+        }
+
+        $this->moves[] = $new;
         return end($this->moves);
     }
 
@@ -70,6 +82,7 @@ final class Board extends ValueObject
                 }
             }
         }
+
         return $final;
     }
 
@@ -80,5 +93,29 @@ final class Board extends ValueObject
             ? 'first_player'
             : 'second_player'
         );
+    }
+
+    public function countFreeTiles()
+    {
+        $numberOfFreeTiles = 9;
+
+        foreach ($this->moves as $move) {
+            for ($row = 0; $row <= 2; $row++) {
+                for ($col = 0; $col <= 2; $col++) {
+                    if ($move->get('row') == $row &&
+                        $move->get('col') == $col
+                    ) {
+                        $numberOfFreeTiles--;
+                    }
+                }
+            }
+        }
+
+        return $numberOfFreeTiles;
+    }
+
+    public function gameIsEnd()
+    {
+        return 0 === $this->countFreeTiles();
     }
 }

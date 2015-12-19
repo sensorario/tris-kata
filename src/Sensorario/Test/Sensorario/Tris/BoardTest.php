@@ -124,4 +124,45 @@ class BoardTest extends PHPUnit_Framework_TestCase
             $this->board->currentPlayer()
         );
     }
+
+    public function testThereAreNineAvailableMoves()
+    {
+        $this->assertEquals(
+            9,
+            $this->board->countFreeTiles()
+        );
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testCannotAcceptSamemoveTwice()
+    {
+        $this->board->move(Tris\Move::box([
+            'row' => 1,
+            'col' => 1,
+        ]));
+
+        $this->board->move(Tris\Move::box([
+            'row' => 1,
+            'col' => 1,
+        ]));
+    }
+
+    public function testSimulation()
+    {
+        $countActions = 0;
+
+        do {
+            try {
+                $move = Tris\Move::createRandom();
+                $this->board->move($move);
+            } catch (\RuntimeException $e) { }
+            $countActions++;
+        } while ($this->board->countFreeTiles() !== 0);
+
+        $this->assertTrue(
+            $this->board->gameIsEnd()
+        );
+    }
 }

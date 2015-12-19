@@ -13,4 +13,8 @@ interface Board
     public function getFreeTiles();
 
     public function currentPlayer();
+
+    public function countFreeTiles();
+
+    public function gameIsEnd();
 }
