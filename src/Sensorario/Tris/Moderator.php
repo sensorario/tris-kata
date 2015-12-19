@@ -7,6 +7,11 @@ class Moderator
 {
     public function createBoardWithPlayers(array $players)
     {
-        return Board::withPlayers($players);
+
+    }
+
+    public function doMove()
+    {
+
     }
 }

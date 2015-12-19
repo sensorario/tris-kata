@@ -9,7 +9,7 @@ class ModeratorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->moderator = new Tris\Moderator();
+        $this->moderator = new Tris\Moderator(Tris\Board::box());
     }
 
     public function testModeratorPushPlauyersToMove()

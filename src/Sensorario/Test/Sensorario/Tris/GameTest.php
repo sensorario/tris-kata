@@ -26,11 +26,13 @@ class GameTest extends PHPUnit_Framework_TestCase
         $this->board = Tris\Board::box($this->players);
     }
 
-    public function testModeratorCreateTheBoard()
+    public function testModeratorCreateTheBoardAndAskTeMove()
     {
         $this->moderator->expects($this->once())
-            ->method('createBoardWithPlayers')
-            ->will($this->returnValue($this->board));
+            ->method('createBoardWithPlayers');
+
+        $this->moderator->expects($this->exactly(9))
+            ->method('doMove');
 
         $game = new Tris\Game(
             $this->moderator
