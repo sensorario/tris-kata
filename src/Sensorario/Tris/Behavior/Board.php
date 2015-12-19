@@ -2,9 +2,11 @@
 
 namespace Sensorario\Tris\Behavior;
 
+use Sensorario\Tris;
+
 interface Board
 {
-    public function move(array $tiles);
+    public function move(Tris\Move $tiles);
 
     public function getMove($index);
 

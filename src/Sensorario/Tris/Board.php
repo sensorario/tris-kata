@@ -2,6 +2,7 @@
 
 namespace Sensorario\Tris;
 
+use Sensorario\ValueObject\Helpers\JsonExporter;
 use Sensorario\ValueObject\ValueObject;
 
 /** @todo should change status */
@@ -12,11 +13,7 @@ final class Board extends ValueObject
 {
     const EMPTY_TILE = false;
 
-    private $moves = [[
-        [false, false, false],
-        [false, false, false],
-        [false, false, false],
-    ]];
+    private $moves = [];
 
     public function withPlayers(array $players = [])
     {
@@ -43,9 +40,9 @@ final class Board extends ValueObject
         ];
     }
 
-    public function move(array $tiles)
+    public function move(Move $move)
     {
-        $this->moves[] = $tiles;
+        $this->moves[] = $move;
         return end($this->moves);
     }
 
@@ -56,12 +53,19 @@ final class Board extends ValueObject
 
     public function getFreeTiles()
     {
-        $final = $this->getMove(0);
-        foreach ($this->moves as $play) {
-            for ($i = 0; $i <= 2; $i++) {
-                for ($j = 0; $j <= 2; $j++) {
-                    if ($play[$i][$j]) {
-                        $final[$i][$j] = $play[$i][$j];
+        $final = [
+            [false, false, false],
+            [false, false, false],
+            [false, false, false],
+        ];
+
+        foreach ($this->moves as $move) {
+            for ($row = 0; $row <= 2; $row++) {
+                for ($col = 0; $col <= 2; $col++) {
+                    if ($move->get('row') == $row &&
+                        $move->get('col') == $col
+                    ) {
+                        $final[$row][$col] = true;
                     }
                 }
             }
@@ -73,8 +77,8 @@ final class Board extends ValueObject
     {
         return $this->get(
             count($this->moves) % 2 == 0
-            ? 'second_player'
-            : 'first_player'
+            ? 'first_player'
+            : 'second_player'
         );
     }
 }

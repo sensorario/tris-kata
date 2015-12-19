@@ -7,17 +7,24 @@ use Sensorario\Tris\Move;
 
 final class MoveTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        $this->move = Move::createRandom();
+    }
+
     public function testOneTileIsTrue()
     {
-        $move = Move::createRandom();
-
-        $trueTiles = 0;
-        for ($i = 0; $i < 3; $i++) {
-            for ($j = 0; $j < 3; $j++) {
-                $trueTiles += $move[$i][$j] == true;
+        $numberOfTrueTiles = 0;
+            for ($row = 0; $row <= 2; $row++) {
+                for ($col = 0; $col <= 2; $col++) {
+                    if ($this->move->get('row') == $row &&
+                        $this->move->get('col') == $col
+                    ) {
+                        $numberOfTrueTiles++;
+                    }
+                }
             }
-        }
 
-        $this->assertEquals(1, $trueTiles);
+        $this->assertEquals(1, $numberOfTrueTiles);
     }
 }

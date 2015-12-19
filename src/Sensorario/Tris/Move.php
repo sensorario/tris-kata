@@ -4,6 +4,7 @@ namespace Sensorario\Tris;
 
 use Sensorario\ValueObject\ValueObject;
 
+/** @todo row and col must accept only integer between 0, 1 and 2 */
 final class Move extends ValueObject
     implements Behavior\Move
 {
@@ -11,6 +12,12 @@ final class Move extends ValueObject
     {
         $row = rand(0,2);
         $col = rand(0,2);
+
+        return new self([
+            'col' => $col,
+            'row' => $row,
+        ]);
+
         $move = [];
 
         for ($i = 0; $i < 3; $i++) {
@@ -25,8 +32,8 @@ final class Move extends ValueObject
     public static function mandatory()
     {
         return [
-            'row',
             'col',
+            'row',
         ];
     }
 }

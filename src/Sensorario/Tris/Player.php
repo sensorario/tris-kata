@@ -12,4 +12,9 @@ final class Player extends ValueObject
             'name',
         ];
     }
+
+    public function move()
+    {
+        return Move::createRandom();
+    }
 }

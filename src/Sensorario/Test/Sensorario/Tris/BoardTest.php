@@ -23,88 +23,87 @@ class BoardTest extends PHPUnit_Framework_TestCase
         ]);
     }
 
-    public function testStatusShouldContainAnArray()
-    {
-        $initialStatus = [
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-        ];
+    // public function testStatusShouldContainAnArray()
+    // {
+    //     $initialStatus = [
+    //         [false, false, false],
+    //         [false, false, false],
+    //         [false, false, false],
+    //     ];
 
-        $this->assertEquals(
-            $initialStatus,
-            $this->board->getMove(0)
-        );
-    }
+    //     $this->assertEquals(
+    //         $initialStatus,
+    //         $this->board->getMove(0)
+    //     );
+    // }
 
     public function testAfterAMoveStatusChange()
     {
-        $move = [
-            [false, false, false],
-            [false, true,  false],
-            [false, false, false],
-        ];
+        $move = Tris\Move::box([
+            'col' => 1,
+            'row' => 1,
+        ]);
 
         $this->assertEquals(
             $move,
-            $this->board->move($move)
+            $this->board->move(
+                Tris\Move::box([
+                    'col' => 1,
+                    'row' => 1,
+                ])
+            )
         );
     }
 
-    public function testContainsCollectionOfAllPlayedMoves()
-    {
-        $move = [
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-        ];
+    // public function testContainsCollectionOfAllPlayedMoves()
+    // {
+    //     $move = Tris\Move::box([
+    //         'col' => 1,
+    //         'row' => 1,
+    //     ]);
 
-        $this->assertEquals(
-            $move,
-            $this->board->getMove(0)
-        );
-    }
+    //     $this->assertEquals(
+    //         $move,
+    //         $this->board->getMove(0)
+    //     );
+    // }
 
     public function testMovesCollectionAfterFirstMove()
     {
-        $move = [
-            [false, false, false],
-            [false, true,  false],
-            [false, false, false],
-        ];
+        $move = Tris\Move::box([
+            'col' => 1,
+            'row' => 1,
+        ]);
 
         $this->board->move($move);
 
         $this->assertEquals(
             $move,
-            $this->board->getMove(1)
+            $this->board->getMove(0)
         );
     }
 
     public function testMovesThreeTimes()
     {
-        $this->board->move([
-            [false, false, false],
-            [false, true,  false],
-            [false, false, false],
-        ]);
+        $this->board->move(Tris\Move::box([
+            'row' => 1,
+            'col' => 1,
+        ]));
 
-        $this->board->move([
-            [false, false, false],
-            [false, false, false],
-            [true,  false, false],
-        ]);
+        $this->board->move(Tris\Move::box([
+            'row' => 1,
+            'col' => 2,
+        ]));
 
-        $this->board->move([
-            [false, false, false],
-            [false, false, false],
-            [false, true,  false],
-        ]);
+        $this->board->move(Tris\Move::box([
+            'row' => 2,
+            'col' => 0,
+        ]));
 
         $freeTiles = [
-            [false, false, false],
-            [false, true,  false],
-            [true,  true,  false],
+            [false,false, false],
+            [false, true,  true],
+            [true, false, false],
         ];
 
         $this->assertEquals(
