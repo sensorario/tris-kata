@@ -68,4 +68,13 @@ final class Board extends ValueObject
         }
         return $final;
     }
+
+    public function currentPlayer()
+    {
+        return $this->get(
+            count($this->moves) % 2 == 0
+            ? 'second_player'
+            : 'first_player'
+        );
+    }
 }

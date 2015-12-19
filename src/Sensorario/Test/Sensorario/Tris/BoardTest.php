@@ -9,13 +9,17 @@ class BoardTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
+        $this->firstPlayer = Tris\Player::box([
+            'name' => 'Sensorario',
+        ]);
+
+        $this->secondPlayer = Tris\Player::box([
+            'name' => 'Demo',
+        ]);
+
         $this->board = Tris\Board::withPlayers([
-            'first_player' => Tris\Player::box([
-                'name' => 'Sensorario',
-            ]),
-            'second_player' => Tris\Player::box([
-                'name' => 'Demo',
-            ]),
+            'first_player' => $this->firstPlayer,
+            'second_player' => $this->secondPlayer,
         ]);
     }
 
@@ -100,12 +104,25 @@ class BoardTest extends PHPUnit_Framework_TestCase
         $freeTiles = [
             [false, false, false],
             [false, true,  false],
-            [true , true,  false],
+            [true,  true,  false],
         ];
 
         $this->assertEquals(
             $freeTiles,
             $this->board->getFreeTiles()
+        );
+    }
+
+    public function testAfterMovePlayerChange()
+    {
+        $this->assertEquals(
+            $this->firstPlayer,
+            $this->board->currentPlayer()
+        );
+        $this->board->move(Tris\Move::createRandom());
+        $this->assertEquals(
+            $this->secondPlayer,
+            $this->board->currentPlayer()
         );
     }
 }

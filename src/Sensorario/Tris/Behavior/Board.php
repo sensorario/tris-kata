@@ -9,4 +9,6 @@ interface Board
     public function getMove($index);
 
     public function getFreeTiles();
+
+    public function currentPlayer();
 }
