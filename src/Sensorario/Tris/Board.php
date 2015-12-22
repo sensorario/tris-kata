@@ -151,8 +151,6 @@ final class Board extends ValueObject
             }
         }
 
-        // check diagonal
-
         return false;
     }
 
