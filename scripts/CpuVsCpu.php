@@ -23,15 +23,22 @@ $currentMove = function ($move) use ($board) {
     echo " row " . $lastMove->get('row');
 
     if ($board->trisIsDone()) {
+        echo "\n\nThe winner is: ";
         echo $board->lastPlayer()->get('name');
+        echo "\n\n";
         die;
     }
 };
 
 
-do {
-    try {
-        $currentMove(Tris\Move::createRandom());
-    } catch (Exception $e) {
-    }
-} while ($board->matchIsNotFinished());
+try {
+    do {
+        try {
+            $currentMove(Tris\Move::createRandom());
+        } catch (Exception $e) {
+        }
+    } while ($board->matchIsNotFinished());
+} catch (Tris\NoWinnerException $e) {
+    echo "\n\nNobody wins\n\n";
+    die;
+}

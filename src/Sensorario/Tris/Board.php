@@ -2,7 +2,7 @@
 
 namespace Sensorario\Tris;
 
-use Sensorario\ValueObject\Helpers\JsonExporter;
+use Sensorario\ValueObject\Helpers\Jsonxporter;
 use Sensorario\ValueObject\ValueObject;
 
 final class Board extends ValueObject
@@ -11,6 +11,8 @@ final class Board extends ValueObject
     const EMPTY_TILE = false;
 
     private $moves = [];
+
+    private $movesPerPlayer = [];
 
     public function withPlayers(array $players = [])
     {
@@ -52,6 +54,13 @@ final class Board extends ValueObject
         }
 
         $this->moves[] = $new;
+
+        $currentName = $this->currentPlayer()->get('name');
+        $this->movesPerPlayer
+            [$currentName]
+            [$new->get('row')]
+            [$new->get('col')] = true;
+
         return end($this->moves);
     }
 
@@ -128,35 +137,53 @@ final class Board extends ValueObject
 
     public function trisIsDone()
     {
-        $tiles = $this->getMatrixOfTiles();
+        $playerName = $this->currentPlayer()->get('name');
 
-        if (3 === $tiles[0][0] + $tiles[1][1] + $tiles[2][2]) {
-            return true;
+        if (!isset($this->movesPerPlayer[$playerName])) {
+            return false;
         }
 
-        if (3 === $tiles[0][2] + $tiles[1][1] + $tiles[0][2]) {
-            return true;
-        }
+        $tiles = $this->movesPerPlayer[$playerName];
 
-        for ($i = 0; $i < 2; $i++) {
-            if (3 === array_sum($tiles[$i])) {
+        for ($row = 0; $row < 3; $row++) {
+            if (
+                isset($tiles[$row][0]) &&
+                isset($tiles[$row][1]) &&
+                isset($tiles[$row][2])
+            ) {
                 return true;
             }
+        }
 
-            for ($sum = 0, $row = 0; $row <= 2; $row++) {
-                $sum += $tiles[$row][$i];
-                if (3 === $sum) {
-                    return true;
-                }
+        for ($col = 0; $col < 3; $col++) {
+            if (
+                isset($tiles[0][$col]) &&
+                isset($tiles[1][$col]) &&
+                isset($tiles[2][$col])
+            ) {
+                return true;
             }
         }
 
-        return false;
+        return 
+            isset($tiles[0][0]) &&
+            isset($tiles[1][1]) &&
+            isset($tiles[2][2])
+            ||
+            isset($tiles[0][2]) &&
+            isset($tiles[1][1]) &&
+            isset($tiles[2][0])
+        ;
     }
 
-    /** @todo test */
     public function matchIsNotFinished()
     {
+        if (count($this->moves) === 9) {
+            throw new NoWinnerException(
+                ''
+            );
+        }
+
         return !$this->trisIsDone();
     }
 }
